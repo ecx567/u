@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación de Ensamble Geométrico</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="info">
+        <h1>Simulación de Ensamble Geométrico</h1>
+        <p>Visualización de figuras armándose por partes.</p>
+        <div class="controls">
+            <label for="figure-select">Figura:</label>
+            <select id="figure-select">
+                <option value="cube">Cubo</option>
+                <option value="pyramid">Pirámide (Tetraedro)</option>
+                <option value="cuboid">Prisma Rectangular</option>
+                <option value="prism">Prisma Triangular</option>
+                <option value="cylinder">Cilindro</option>
+            </select>
+
+            <div id="dimensions-container" class="dimensions-container">
+                <!-- Inputs will be injected here via JS -->
+            </div>
+            
+            <div class="slider-container">
+                <label for="assembly-slider">Progreso de Ensamble:</label>
+                <input type="range" id="assembly-slider" min="0" max="1" step="0.01" value="0">
+            </div>
+            
+            <button id="animate-btn">Animar Ensamble</button>
+
+            <div id="formulas" class="formulas-container">
+                <h3>Fórmulas</h3>
+                <div id="formula-content"></div>
+            </div>
+
+            <div id="stats" class="stats-container">
+                <h3>Cálculos Geométricos</h3>
+                <div class="stat-item">
+                    <span class="label">Perímetro Base:</span>
+                    <span id="stat-perimeter" class="value">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Área Superficial:</span>
+                    <span id="stat-area" class="value">-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="label">Volumen:</span>
+                    <span id="stat-volume" class="value">-</span>
+                </div>
+            </div>
+            
+            <div class="mode-switch">
+                <button id="mode-toggle-btn" class="mode-btn">Ir a Modo Creatividad</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="creative-controls" class="creative-panel" style="display: none;">
+        <h2>Modo Creatividad</h2>
+        <p>Construye libremente con figuras.</p>
+        <div class="creative-buttons">
+            <button onclick="addCreativeFigure('cube')">Añadir Cubo</button>
+            <button onclick="addCreativeFigure('pyramid')">Añadir Pirámide</button>
+            <button onclick="addCreativeFigure('cuboid')">Añadir Bloque</button>
+            <button onclick="addCreativeFigure('cylinder')">Añadir Cilindro</button>
+            <button onclick="addCreativeFigure('prism')">Añadir Prisma</button>
+        </div>
+
+        <div class="creative-generators">
+            <h3>Generación Automática</h3>
+            <button onclick="generateHouse()">Generar Casa</button>
+            <button onclick="generateBuilding()">Generar Edificio</button>
+            <button onclick="generateCity()">Generar Ciudad</button>
+        </div>
+
+        <div class="creative-actions">
+            <button id="delete-selected-btn" style="background: #ff4d4d;">Borrar Seleccionado</button>
+            <button id="clear-scene-btn" style="background: #ff4d4d;">Borrar Todo</button>
+            <button id="back-sim-btn" class="mode-btn">Volver a Simulación</button>
+        </div>
+        <div class="instructions">
+            <small>Click para seleccionar. Usa los controles para mover/rotar.</small>
+            <br>
+            <small>Tecla 'T': Trasladar | 'R': Rotar</small>
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
